@@ -20,8 +20,8 @@ app.use('/imaginexyz', express.static(__dirname + '/graphs')); //Página para vi
 
 //Servicios REST permitidos
 app.get('/imaginexyz/genuinoday', database.getData);  //GET
-app.post('/imaginexyz/genuinodayp', database.newData); //POST Body
-app.post('/imaginexyz/genuinodayq', database.newData); //POST Query
+app.post('/imaginexyz/genuinodayb', database.newDataBody); //POST Body
+app.post('/imaginexyz/genuinodayq', database.newDataQuery); //POST Query
 app.put('/imaginexyz/genuinoday', database.editData); //PUT
 app.delete('/imaginexyz/genuinoday', database.removeData); //DELETE
 
