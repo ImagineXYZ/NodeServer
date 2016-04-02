@@ -53,8 +53,35 @@ exports.getData = function(req,res) {
     });
 }
 
+
 //POST- CREATE
-exports.newData = function(req, res) {
+exports.newDataBody = function(req, res) {
+    var resource = req.body;
+    resource['date'] = new Date().addHours(-6);
+    resource['hour'] = new Date().addHours(-6).getHours();
+    resource['minute'] = new Date().addHours(-6).getMinutes();
+    db.collection('Ids').findAndModify({_id:1},{},{$inc:{posts:1}},function(err, doc_ids) {
+        if(err) {
+            throw err;
+            res.send(400, err);
+        }
+        else{
+            resource["_id"] = doc_ids.value.posts;
+            db.collection('ImagineXYZ').insert(resource, function(error, doc_project){
+                if(error) {
+                    throw error;
+                    res.send(400, error);
+                }
+                else{
+                    res.send(200, resource);
+                }
+            })
+        }
+    });
+}
+
+//POST- CREATE
+exports.newDataQuery = function(req, res) {
     var resource = req.query;
     resource['date'] = new Date().addHours(-6);
     resource['hour'] = new Date().addHours(-6).getHours();
