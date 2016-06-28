@@ -70,7 +70,7 @@ app.get('/mqtt/url', function (req, res) {
 });
 
 app.get('/mqtt/message', function (req, res) {
-    res.send(mqtt_url, 404);
+    res.send(lastOne, 404);
 });
 
 //Redirección por defecto
