@@ -11,7 +11,7 @@ var auth = (mqtt_url.auth || ':').split(':');
 var lastOne = {};
 
 // Create a client connection
-var client = mqtt.createClient(mqtt_url.port, mqtt_url.hostname, {
+var client = mqtt.connect(mqtt_url.port, mqtt_url.hostname, {
   username: auth[0],
   password: auth[1]
 });
@@ -24,7 +24,7 @@ client.on('connect', function() { // When connected
   });
 
   // publish a message to a topic
-  client.publish('imaginexyz/connected', 'conectado', function() {
+  client.publish('imaginexyz/connected', 'conectadisimo', function() {
     console.log("Message is published");
   });
 });
