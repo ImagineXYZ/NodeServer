@@ -19,7 +19,7 @@ var client = mqtt.createClient(mqtt_url.port, mqtt_url.hostname, {
 client.on('connect', function() { // When connected
 
   // subscribe to a topic
-  client.subscribe('imaginexyz/connected', function() {
+  client.subscribe('imaginexyz/listen', function() {
     // when a message arrives, do something with it
     client.on('message', function(topic, message, packet) {
       	console.log("Received '" + message + "' on '" + topic + "'");
