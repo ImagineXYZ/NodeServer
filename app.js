@@ -8,6 +8,7 @@ var mqtt = require('mqtt'), url = require('url');
 // Parse
 var mqtt_url = url.parse(process.env.CLOUDMQTT_URL || 'mqtt://localhost:1883');
 var auth = (mqtt_url.auth || ':').split(':');
+var lastOne = '';
 
 // Create a client connection
 var client = mqtt.createClient(mqtt_url.port, mqtt_url.hostname, {
@@ -18,15 +19,20 @@ var client = mqtt.createClient(mqtt_url.port, mqtt_url.hostname, {
 client.on('connect', function() { // When connected
 
   // subscribe to a topic
-  client.subscribe('hello/world', function() {
+  client.subscribe('imaginexyz/publish', function() {
     // when a message arrives, do something with it
     client.on('message', function(topic, message, packet) {
       console.log("Received '" + message + "' on '" + topic + "'");
+      lastOne = message;
+      client.publish('imaginexyz/subscribe', message, function() {
+	    console.log("Message is published");
+	    client.end(); // Close the connection when published
+	  });
     });
   });
 
   // publish a message to a topic
-  client.publish('hello/world', 'my message', function() {
+  client.publish('imaginexyz/subscribe', 'my message', function() {
     console.log("Message is published");
     client.end(); // Close the connection when published
   });
@@ -63,8 +69,12 @@ app.get('/imaginexyz/graphs', database.getInfo);
 app.get('/imaginexyz/posts', database.getPosts);
 
 
-app.get('/imaginexyz/mqtt', function (req, res) {
+app.get('/mqtt/info', function (req, res) {
     res.send(mqtt_url, 404);
+});
+
+app.get('/mqtt/message', function (req, res) {
+    res.send(lastOne, 404);
 });
 
 //Redirección por defecto
