@@ -22,6 +22,8 @@ client.on('connect', function() { // When connected
   client.subscribe('imaginexyz/listen', function() {
     // when a message arrives, do something with it
     client.on('message', function(topic, message, packet) {
+    	var fullMessage = '' + message + '';
+    	client.publish('imaginexyz/connected', fullMessage);
       	console.log("Received '" + message + "' on '" + topic + "'");
     });
   });
