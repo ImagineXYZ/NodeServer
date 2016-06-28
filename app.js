@@ -34,7 +34,17 @@ client.on('connect', function() { // When connected
 
 client.on('message', function(topic, message) {  
   switch (topic) {
+    case 'imaginexyz/publish':
+      var fullMessage = 'Publish: ' + message;
+      lastOne['message'] = message;
+      lastOne['topic'] = topic; 
+      client.publish('imagine/connected', fullMessage);
       break;
+    case 'imaginexyz/subscribe':
+      var fullMessage = 'Publish: ' + message;
+      lastOne['message'] = message;
+      lastOne['topic'] = topic; 
+      client.publish('imagine/connected', fullMessage);
       break;
   }
 });
