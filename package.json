@@ -12,7 +12,8 @@
     "express": "3.x",
     "cookie-parser": "*",
     "body-parser": "*",
-    "mongodb": "*"
+    "mongodb": "*",
+    "url": "*",
+    "mqtt": "*"
   }
 }
-
