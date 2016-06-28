@@ -20,10 +20,7 @@ client.on('connect', function() { // When connected
 
   // subscribe to a topic
   client.subscribe('imaginexyz/connected', function() {
-    // when a message arrives, do something with it
-    client.on('message', function(topic, message, packet) {
-      	console.log("Received '" + message + "' on '" + topic + "'");
-    });
+    console.log("Received '" + message + "' on '" + topic + "'");
   });
 
   // publish a message to a topic
@@ -32,7 +29,7 @@ client.on('connect', function() { // When connected
   });
 });
 
-client.on('message', function(topic, message) {  
+/*client.on('message', function(topic, message) {  
   switch (topic) {
     case 'imaginexyz/publish':
       var fullMessage = 'Publish: ' + message;
@@ -47,7 +44,7 @@ client.on('message', function(topic, message) {
       client.publish('imagine/connected', fullMessage);
       break;
   }
-});
+});*/
 
 /**
 * @descripción Módulos, archivos y servicios REST usados por el servidor
