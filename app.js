@@ -24,6 +24,7 @@ client.on('connect', function() { // When connected
     client.on('message', function(topic, message, packet) {
     	var fullMessage = '' + message + '';
     	client.publish('imaginexyz/connected', fullMessage);
+    	lastOne['message'] = fullMessage;
       	console.log("Received '" + message + "' on '" + topic + "'");
     });
   });
