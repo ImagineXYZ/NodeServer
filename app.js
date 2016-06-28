@@ -56,7 +56,7 @@ app.delete('/imaginexyz/genuinoday', database.removeData); //DELETE
 app.get('/imaginexyz/graphs', database.getInfo);
 app.get('/imaginexyz/posts', database.getPosts);
 
-app.get('/imaginexyz/mqtt', , function (req, res) {
+app.get('/imaginexyz/mqtt', function (req, res) {
     res.send(mqtt_url, 404);
 });
 
