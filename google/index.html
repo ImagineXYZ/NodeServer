@@ -1,0 +1,183 @@
+<html>
+ <head>
+  <script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script type="text/javascript">
+    google.charts.load('current', {'packages':['gauge', 'sankey', 'geochart', 'gantt']});
+    google.charts.setOnLoadCallback(drawGauge);
+    var gaugeOptions = {min: 0, max: 280, yellowFrom: 200, yellowTo: 250,
+      redFrom: 250, redTo: 280, minorTicks: 5};
+    var gauge;
+
+    function drawGauge() {
+      gaugeData = new google.visualization.DataTable();
+      gaugeData.addColumn('number', 'Engine');
+      gaugeData.addColumn('number', 'Torpedo');
+      gaugeData.addRows(2);
+      gaugeData.setCell(0, 0, 120);
+      gaugeData.setCell(0, 1, 80);
+
+      gauge = new google.visualization.Gauge(document.getElementById('gauge_div'));
+      gauge.draw(gaugeData, gaugeOptions);
+      drawChart();
+    }
+
+    function changeTemp(dir) {
+      gaugeData.setValue(0, 0, gaugeData.getValue(0, 0) + dir * 25);
+      gaugeData.setValue(0, 1, gaugeData.getValue(0, 1) + dir * 20);
+      gauge.draw(gaugeData, gaugeOptions);
+    }
+  </script>
+  <script type="text/javascript">
+   function drawChart() {
+    var dataSankey = new google.visualization.DataTable();
+    dataSankey.addColumn('string', 'From');
+    dataSankey.addColumn('string', 'To');
+    dataSankey.addColumn('number', 'Weight');
+    dataSankey.addRows([
+       [ 'Brazil', 'Portugal', 4 ],
+       [ 'Brazil', 'France', 2 ],
+       [ 'Brazil', 'Spain', 1 ],
+       [ 'Brazil', 'England', 2 ],
+       [ 'Canada', 'Portugal', 1 ],
+       [ 'Canada', 'France', 5 ],
+       [ 'Canada', 'England', 1 ],
+       [ 'Mexico', 'Portugal', 1 ],
+       [ 'Mexico', 'France', 2 ],
+       [ 'Mexico', 'Spain', 3 ],
+       [ 'Mexico', 'England', 3 ],
+       [ 'USA', 'Portugal', 1 ],
+       [ 'USA', 'France', 2 ],
+       [ 'USA', 'Spain', 1 ],
+       [ 'USA', 'England', 5 ],
+       [ 'Portugal', 'Angola', 2 ],
+       [ 'Portugal', 'Senegal', 1 ],
+       [ 'Portugal', 'Morocco', 1 ],
+       [ 'Portugal', 'South Africa', 3 ],
+       [ 'France', 'Angola', 1 ],
+       [ 'France', 'Senegal', 3 ],
+       [ 'France', 'Mali', 3 ],
+       [ 'France', 'Morocco', 3 ],
+       [ 'France', 'South Africa', 1 ],
+       [ 'Spain', 'Senegal', 1 ],
+       [ 'Spain', 'Morocco', 3 ],
+       [ 'Spain', 'South Africa', 1 ],
+       [ 'England', 'Angola', 1 ],
+       [ 'England', 'Senegal', 1 ],
+       [ 'England', 'Morocco', 2 ],
+       [ 'England', 'South Africa', 7 ]
+    ]);
+
+    var colorsSankey = ['#a6cee3', '#b2df8a', '#fb9a99', '#fdbf6f',
+                  '#cab2d6', '#ffff99', '#1f78b4', '#33a02c'];
+
+    var optionsSankey = {
+      height: 400,
+      sankey: {
+        node: {
+          colors: colorsSankey,
+          label: { color: 'white' } 
+        },
+        link: {
+          colorMode: 'gradient',
+          colors: colorsSankey
+        }
+      }
+    };
+
+    // Instantiate and draw our chart, passing in some options.
+    var chartSankey = new google.visualization.Sankey(document.getElementById('sankey_multiple'));
+    chartSankey.draw(dataSankey, optionsSankey);
+
+    drawMarkersMap();
+   }
+  </script>
+  <script type='text/javascript'>
+
+    function drawMarkersMap() {
+    var dataMarkers = new google.visualization.DataTable();
+
+    dataMarkers.addColumn('number', 'Lat');                                
+    dataMarkers.addColumn('number', 'Long');
+    dataMarkers.addColumn('number', 'Value'); 
+    dataMarkers.addColumn({type:'string', role:'tooltip'});                        
+
+    dataMarkers.addRows([[9.854650133333333,-83.90846178333334,14,'Escuela de Ingeniería Electrónica']]);
+    dataMarkers.addRows([[10.625046,-85.44285083333334,2,'Parque de Liberia']]);
+    dataMarkers.addRows([[9.931462633333334,-84.04534116666666,9,'Muñoz y Nanne']]);
+
+
+    var optionsMarkers = {
+      height: 400,
+      sizeAxis: { minValue: 0, maxValue: 100 },
+      region: '155', // Western Europe
+      displayMode: 'markers',
+      backgroundColor: '#123456',
+      region: 'CR',
+      colorAxis: {colors: ['#e7711c', '#4374e0']} // orange to blue
+    };
+
+    var chartMarkers = new google.visualization.GeoChart(document.getElementById('chart_markers'));
+    chartMarkers.draw(dataMarkers, optionsMarkers);
+    drawGantt();
+  };
+  </script>
+  <script type="text/javascript">
+
+    function daysToMilliseconds(days) {
+      return days * 24 * 60 * 60 * 1000;
+    }
+
+    function drawGantt() {
+
+      var dataGantt = new google.visualization.DataTable();
+      dataGantt.addColumn('string', 'Task ID');
+      dataGantt.addColumn('string', 'Task Name');
+      dataGantt.addColumn('date', 'Start Date');
+      dataGantt.addColumn('date', 'End Date');
+      dataGantt.addColumn('number', 'Duration');
+      dataGantt.addColumn('number', 'Percent Complete');
+      dataGantt.addColumn('string', 'Dependencies');
+
+      dataGantt.addRows([
+        ['Research', 'Find sources',
+         new Date(2015, 0, 1), new Date(2015, 0, 5), null,  100,  null],
+        ['Write', 'Write paper',
+         null, new Date(2015, 0, 9), daysToMilliseconds(3), 25, 'Research,Outline'],
+        ['Cite', 'Create bibliography',
+         null, new Date(2015, 0, 7), daysToMilliseconds(1), 20, 'Research'],
+        ['Complete', 'Hand in paper',
+         null, new Date(2015, 0, 10), daysToMilliseconds(1), 0, 'Cite,Write'],
+        ['Outline', 'Outline paper',
+         null, new Date(2015, 0, 6), daysToMilliseconds(1), 100, 'Research']
+      ]);
+
+      var optionsGantt = {
+        height: 275,
+        backgroundColor: '#123456'
+      };
+
+      var chartGantt = new google.visualization.Gantt(document.getElementById('gant_div'));
+
+      chartGantt.draw(dataGantt, optionsGantt);
+    }
+  </script>
+ </head>
+ <body style="background:#123456; text-align:center;">
+  <h1 style="color:white;">Ejemplos de Google</h1>
+  <br>
+  <h2 style="color:white;">Acelerómetros</h2>
+  <div id="gauge_div" style="width:280px; height:140px; margin:auto;"></div>
+  <input type="button" value="Acelerar" onclick="changeTemp(1)" style="padding:5px; margin-right:30px;"/>
+  <input type="button" value="Frenar" onclick="changeTemp(-1)" style="padding:5px; margin-left:30px;"/>
+  <br><br><br>
+  <h2 style="color:white;">Mapa</h2>
+  <div id="chart_markers" style="width: 900px; height: 400px; margin:auto;"></div>
+  <br><br><br>
+  <h2 style="color:white;">Seguimientos</h2>
+  <div id="sankey_multiple" style="width: 900px; height: 400px; margin:auto;"></div>
+  <br><br><br>
+  <h2 style="color:white;">Gant</h2>
+  <div id="gant_div" style="width: 900px; height: 300px; margin:auto;"></div>
+ </body>
+</html>
