@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <meta name="description" content="Draw polylines with various widths and materials.">
-    <meta name="cesium-sandcastle-labels" content="Geometries">
-    <title>Cesium Demo</title>
+    <meta name="description" content="Imagine XYZ - Remora GPS Software">  
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <title>Imagine XYZ - Remora GPS</title>
     <script type="text/javascript" src="../gps/Sandcastle-header.js"></script>
     <script type="text/javascript" src="../../../gps/ThirdParty/requirejs-2.1.20/require.js"></script>
     <script type="text/javascript">
@@ -19,7 +19,30 @@
 <body class="sandcastle-loading" data-sandcastle-bucket="bucket-requirejs.html">
 <style>
     @import url(./templates/bucket.css);
+    .imagineImage{
+        display: none;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+    }
+    .boatInfo{
+        background: rgba(0,0,0,0.5);
+        position: fixed;
+        top: 0;
+        left: 0;
+        padding: 30px;
+        z-index: 1;
+    }
 </style>
+<div class="boatInfo">
+    <h2>Bote Placa: XYZ-016</h2>
+    <label>Km Recorridos: 254.68 Km</label><br>
+    <label>Motor: GM 85</label><br>
+    <label>Gasolina Consumida: 51.3 L</label><br>
+    <label>Comportamiento: Malicioso</label><br>
+</div>
+<img class="imagineImage" src="images/imagine.png"/>
 <div id="cesiumContainer" class="fullSize"></div>
 <div id="loadingOverlay"><h1>Loading...</h1></div>
 <div id="toolbar"></div>
@@ -31,7 +54,7 @@ Cesium.BingMapsApi.defaultKey = 'Aj32__WAD8Dt5NajfTKD49UNE1oVxF7ASDDQaFnv7LgY1ca
 var viewer = new Cesium.Viewer('cesiumContainer');
 
 
-var arrayPos = [{"_id":"5750deb65edc1503005ff530","fecha":20160603013435,"lat":9.931947,"lon":-84.048767,"vel":6.39,"alt":1243.4,"date":"2016-06-02T19:34:46.199Z","hour":19,"minute":34},{"_id":"5750df7d5edc1503005ff531","fecha":20160603013754,"lat":9.935857,"lon":-84.05703,"vel":40.74,"alt":1209.5,"date":"2016-06-02T19:38:05.799Z","hour":19,"minute":38},{"_id":"5750e0b35edc1503005ff532","fecha":20160603014304,"lat":9.935855,"lon":-84.063141,"vel":0.35,"alt":1216.1,"date":"2016-06-02T19:43:15.540Z","hour":19,"minute":43},{"_id":"575fb0115eb84a0300cc8b54","fecha":20160614071939,"lat":9.938708,"lon":-84.060707,"vel":1.3,"alt":148.3,"date":"2016-06-14T01:19:45.391Z","hour":1,"minute":19},{"_id":"575fb09f5eb84a0300cc8b56","fecha":20160614072155,"lat":9.938797,"lon":-84.060844,"vel":1.09,"alt":75.2,"date":"2016-06-14T01:22:07.242Z","hour":1,"minute":22},{"_id":"57602d20687fa10300442936","fecha":20160614161313,"lat":9.959388,"lon":-84.060524,"vel":1.52,"alt":148.3,"date":"2016-06-14T10:13:20.498Z","hour":10,"minute":13},{"_id":"57603193687fa10300442937","fecha":20160614163213,"lat":9.937643,"lon":-84.061226,"vel":1.8,"alt":1209.5,"date":"2016-06-14T10:32:19.404Z","hour":10,"minute":32},{"_id":"576032c8687fa10300442938","fecha":20160614163717,"lat":9.937685,"lon":-84.061134,"vel":0.67,"alt":1204.6,"date":"2016-06-14T10:37:28.503Z","hour":10,"minute":37},{"_id":"576033fd687fa10300442939","fecha":20160614164227,"lat":9.937732,"lon":-84.061249,"vel":1.93,"alt":1203.1,"date":"2016-06-14T10:42:37.985Z","hour":10,"minute":42},{"_id":"57603532687fa1030044293a","fecha":20160614164735,"lat":9.937683,"lon":-84.060989,"vel":0.39,"alt":1204.2,"date":"2016-06-14T10:47:46.349Z","hour":10,"minute":47}],
+/*var arrayPos = [{"_id":"5750deb65edc1503005ff530","fecha":20160603013435,"lat":9.931947,"lon":-84.048767,"vel":6.39,"alt":1243.4,"date":"2016-06-02T19:34:46.199Z","hour":19,"minute":34},{"_id":"5750df7d5edc1503005ff531","fecha":20160603013754,"lat":9.935857,"lon":-84.05703,"vel":40.74,"alt":1209.5,"date":"2016-06-02T19:38:05.799Z","hour":19,"minute":38},{"_id":"5750e0b35edc1503005ff532","fecha":20160603014304,"lat":9.935855,"lon":-84.063141,"vel":0.35,"alt":1216.1,"date":"2016-06-02T19:43:15.540Z","hour":19,"minute":43},{"_id":"575fb0115eb84a0300cc8b54","fecha":20160614071939,"lat":9.938708,"lon":-84.060707,"vel":1.3,"alt":148.3,"date":"2016-06-14T01:19:45.391Z","hour":1,"minute":19},{"_id":"575fb09f5eb84a0300cc8b56","fecha":20160614072155,"lat":9.938797,"lon":-84.060844,"vel":1.09,"alt":75.2,"date":"2016-06-14T01:22:07.242Z","hour":1,"minute":22},{"_id":"57602d20687fa10300442936","fecha":20160614161313,"lat":9.959388,"lon":-84.060524,"vel":1.52,"alt":148.3,"date":"2016-06-14T10:13:20.498Z","hour":10,"minute":13},{"_id":"57603193687fa10300442937","fecha":20160614163213,"lat":9.937643,"lon":-84.061226,"vel":1.8,"alt":1209.5,"date":"2016-06-14T10:32:19.404Z","hour":10,"minute":32},{"_id":"576032c8687fa10300442938","fecha":20160614163717,"lat":9.937685,"lon":-84.061134,"vel":0.67,"alt":1204.6,"date":"2016-06-14T10:37:28.503Z","hour":10,"minute":37},{"_id":"576033fd687fa10300442939","fecha":20160614164227,"lat":9.937732,"lon":-84.061249,"vel":1.93,"alt":1203.1,"date":"2016-06-14T10:42:37.985Z","hour":10,"minute":42},{"_id":"57603532687fa1030044293a","fecha":20160614164735,"lat":9.937683,"lon":-84.060989,"vel":0.39,"alt":1204.2,"date":"2016-06-14T10:47:46.349Z","hour":10,"minute":47}],
     arrayPosClean = [];
 
 arrayPos.forEach(function(punto){
@@ -40,7 +63,7 @@ arrayPos.forEach(function(punto){
     arrayPosClean.push(0);
 });
 
-/*var grayArrow = viewer.entities.add({
+var grayArrow = viewer.entities.add({
     name : 'Gray straight arrow at directions',
     polyline : {
         positions : Cesium.Cartesian3.fromDegreesArrayHeights(arrayPosClean),
@@ -84,7 +107,7 @@ var santacruzPolygon = viewer.entities.add({
     }
 });
 
-var manuelantonioPolygon = viewer.entities.add({
+/*var manuelantonioPolygon = viewer.entities.add({
     name : 'Zona Protegida de Manuel Antonio',
     polygon : {
         hierarchy : Cesium.Cartesian3.fromDegreesArrayHeights([-84.115449, 9.375164, 0,
@@ -98,7 +121,7 @@ var manuelantonioPolygon = viewer.entities.add({
         outline : true,
         outlineColor : Cesium.Color.BLACK
     }
-});
+});*/
 
 var baulasPolygon = viewer.entities.add({
     name : 'Zona Protegida de Marino las Baulas',
@@ -115,7 +138,7 @@ var baulasPolygon = viewer.entities.add({
     }
 });
 
-var cocoPolygon = viewer.entities.add({
+/*var cocoPolygon = viewer.entities.add({
     name : 'Zona Protegida de la Isla del Coco',
     polygon : {
         hierarchy : Cesium.Cartesian3.fromDegreesArrayHeights([-87.16666666666667, 5.5, 0,
@@ -174,7 +197,7 @@ var cahuitaPolygon = viewer.entities.add({
         outline : true,
         outlineColor : Cesium.Color.BLACK
     }
-});
+});*/
 
 
 var goodArrow = viewer.entities.add({
@@ -199,7 +222,7 @@ var goodArrow = viewer.entities.add({
 
 
 var badArrow = viewer.entities.add({
-    name : 'Bote en ruta prohubida',
+    name : 'Bote en ruta prohibida',
     polyline : {
         positions : Cesium.Cartesian3.fromDegreesArrayHeights([-85.835489, 10.197559, 5,
                                                                 -85.860248, 10.206146, 5,
