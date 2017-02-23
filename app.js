@@ -11,7 +11,8 @@ var express = require('express'), //Biblioteca para permitir servicios REST
     mqtt = require('mqtt'), url = require('url'); //Biblioteca para manejar los solicitudes MQTT
 
 //REST APIS
-var  database = require('./services/database'); //Archivo donde vamos a comunicarnos con la base de datos
+var  database = require('./services/database'),
+  remora = require('./services/remora'); //Archivo donde vamos a comunicarnos con la base de datos
 
 var app = express(); //Instancia de express
 app.use(express.logger('dev')); //Método de ver los mensajes en consola
@@ -30,6 +31,13 @@ app.put('/imaginexyz/genuinoday', database.editData); //PUT
 app.delete('/imaginexyz/genuinoday', database.removeData); //DELETE
 
 app.get('/imaginexyz/graphs', database.getInfo); //Query para obtener cantidades de los datos enviados y leidos
+app.get('/imaginexyz/posts', database.getPosts); //Query para obtener los datos enviados y leidos por minuto
+
+app.post('/gps/headers', remora.getHeaders); //Query para obtener los datos enviados y leidos por minuto
+app.post('/gps/sabana', remora.getSabana); //Query para obtener los datos enviados y leidos por minuto
+app.get('/gps/today', remora.getToday); //Query para obtener los datos enviados y leidos por minuto
+app.post('/gps/today', remora.insertToday); //Query para obtener los datos enviados y leidos por minuto
+app.get('/imaginexyz/posts', database.getPosts); //Query para obtener los datos enviados y leidos por minuto
 app.get('/imaginexyz/posts', database.getPosts); //Query para obtener los datos enviados y leidos por minuto
 
 
